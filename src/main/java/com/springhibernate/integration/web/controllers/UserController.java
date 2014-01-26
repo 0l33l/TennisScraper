@@ -3,6 +3,8 @@ package com.springhibernate.integration.web.controllers;
 import com.springhibernate.integration.model.User;
 import com.springhibernate.integration.repository.UserBase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,11 +37,18 @@ public class UserController {
     this.usersRepository = usersRepository;
   }
 
+  public UserController() {}
+
   /**
    * List all the users and display "users.jsp" page.
    * The location and mime-type of "users.jsp" will be resolved by Spring container's "viewResolver" bean
    * that declared in "integration-mvc.xml"
    */
+//  @Secured("isAuthenticated()")
+//  @Secured("ROLE_ADMIN")
+//  @Secured("hasRole('ROLE_ADMIN')")
+//  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PreAuthorize("isAuthenticated()")
   @RequestMapping(value = "users", method = RequestMethod.GET)
   public ModelAndView getUsers() {
     List<User> users = usersRepository.getUsers();
@@ -53,6 +62,7 @@ public class UserController {
    * Notice how easily you can bind a RESTful request parameter to a controllers method parameter
    * using @PathVariable
    */
+  @PreAuthorize("isAuthenticated()")
   @RequestMapping(value = "users/{id}", method = RequestMethod.GET)
   public ModelAndView getUser(@PathVariable Long id) {
     User user = usersRepository.getUser(id);
@@ -61,6 +71,7 @@ public class UserController {
     return modelAndView;
   }
 
+  @Secured("ROLE_ADMIN")
   @RequestMapping(value = "deleteUser/{id}", method = RequestMethod.GET)
   public ModelAndView deleteUser(@PathVariable Long id) {
     usersRepository.deleteUser(id);
@@ -70,6 +81,7 @@ public class UserController {
     return modelAndView;
   }
 
+  @Secured("ROLE_ADMIN")
   @RequestMapping(value = "add", method = {RequestMethod.GET, RequestMethod.POST})
   public ModelAndView getAdd(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("email") String email) {
     User user = new User();

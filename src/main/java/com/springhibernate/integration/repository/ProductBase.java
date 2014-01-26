@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface ProductBase {
   public Product findProductByName(String name);
+  public List<Product> getProductsByName(String name);
   public Product getProduct(Long id);
   public List<Product> getProducts();
   public void addProduct(Product Product);

@@ -10,39 +10,53 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 public class LoggingAspect {
-  //Pointcut definition for all repository transactions that get entities
-  @Pointcut("execution(* com.springhibernate.integration.repository.*.get*(..))")
-  public void getterTransaction() {}
+    boolean isEnable = false;
 
-  //Pointcut definition for all repository transactions that add entities
-  @Pointcut("execution(* com.springhibernate.integration.repository.*.add*(..))")
-  public void adderTransaction() {}
+    //Pointcut definition for all repository transactions that get entities
+    @Pointcut("execution(* com.springhibernate.integration.repository.*.get*(..))")
+    public void getterTransaction() {
+    }
 
-  //For common Advice on both Pointcuts we combine them to make a single Pointcut
-  @Pointcut("adderTransaction() || getterTransaction()")
-  public void adderOrGetterTransaction() {}
+    //Pointcut definition for all repository transactions that add entities
+    @Pointcut("execution(* com.springhibernate.integration.repository.*.add*(..))")
+    public void adderTransaction() {
+    }
 
-  //Advice that executes before an Adder or Getter Transaction Join Point is called
-  @Before("adderOrGetterTransaction()")
-  public void beforeTransaction() {
-    System.out.println("------------------------------------");
-    System.out.println("--------Beginning transaction-------");
-    System.out.println("------------------------------------");
-  }
+    //For common Advice on both Pointcuts we combine them to make a single Pointcut
+    @Pointcut("adderTransaction() || getterTransaction()")
+    public void adderOrGetterTransaction() {
+    }
 
-  @AfterThrowing(pointcut = "adderOrGetterTransaction()", throwing = "throwable")
-  public void adderOrGetterThrewException(Throwable throwable) {
-    throw new RuntimeException("Transaction Unsuccessful. "+throwable.getMessage());
-  }
-  //Advice that executes after an Adder Transaction Join Point is executed
-  @After("adderTransaction()")
-  public void afterAdderTransaction() {
-    System.out.println("-------Ending Adder Transaction-----");
-  }
+    //Advice that executes before an Adder or Getter Transaction Join Point is called
+    @Before("adderOrGetterTransaction()")
+    public void beforeTransaction() {
+        if (isEnable) {
+            System.out.println("------------------------------------");
+            System.out.println("--------Beginning transaction-------");
+            System.out.println("------------------------------------");
+        }
+    }
 
-  //Advice that executes after a Getter Transaction Join Point is executed
-  @AfterReturning(pointcut = "getterTransaction()", returning = "retVal")
-  public void afterGetterTransaction(Object retVal) {
-    System.out.println("Transaction returned value: "+ retVal.toString());
-  }
+    @AfterThrowing(pointcut = "adderOrGetterTransaction()", throwing = "throwable")
+    public void adderOrGetterThrewException(Throwable throwable) {
+        if (isEnable) {
+            throw new RuntimeException("Transaction Unsuccessful. " + throwable.getMessage());
+        }
+    }
+
+    //Advice that executes after an Adder Transaction Join Point is executed
+    @After("adderTransaction()")
+    public void afterAdderTransaction() {
+        if (isEnable) {
+            System.out.println("-------Ending Adder Transaction-----");
+        }
+    }
+
+    //Advice that executes after a Getter Transaction Join Point is executed
+    @AfterReturning(pointcut = "getterTransaction()", returning = "retVal")
+    public void afterGetterTransaction(Object retVal) {
+        if (isEnable) {
+            System.out.println("Transaction returned value: " + retVal.toString());
+        }
+    }
 }

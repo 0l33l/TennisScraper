@@ -24,13 +24,11 @@ public class HibernateProductBase implements ProductBase {
     }
 
     @Override
-    @Transactional
     public Product getProduct(Long id) {
         return (Product) sessionFactory.getCurrentSession().get(Product.class, id);
     }
 
     @Override
-    @Transactional
     public Product findProductByName(String name) {
         Query query = sessionFactory.getCurrentSession().createQuery("from Product where name = :name ");
         query.setParameter("name", name);
@@ -38,15 +36,11 @@ public class HibernateProductBase implements ProductBase {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    @Transactional
     public List<Product> getProducts() {
         return sessionFactory.getCurrentSession().createQuery("from Product u").list();
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    @Transactional
     public List<Product> getProductsByCategory(Long categoryID) {
         Query query = sessionFactory.getCurrentSession().createQuery("from Product where category.id = :categoryId ");
         query.setParameter("categoryId", categoryID);
@@ -54,14 +48,18 @@ public class HibernateProductBase implements ProductBase {
     }
 
     @Override
-    @Transactional
+    public List<Product> getProductsByName(String name) {
+        Query query = sessionFactory.getCurrentSession().createQuery("from Product where lower(name) like :name");
+        query.setParameter("name", '%' + name + '%');
+        return query.list();
+    }
+
+    @Override
     public void addProduct(Product Product) {
-//        sessionFactory.getCurrentSession().save(Product);
         sessionFactory.getCurrentSession().saveOrUpdate(Product);
     }
 
     @Override
-    @Transactional
     public void deleteProduct(Long id) {
         sessionFactory.getCurrentSession().delete(sessionFactory.getCurrentSession().get(Product.class, id));
     }

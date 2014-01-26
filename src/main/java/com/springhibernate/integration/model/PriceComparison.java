@@ -2,15 +2,33 @@ package com.springhibernate.integration.model;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 /**
  * @author Nabeel Ali Memon
  */
-public class PriceComparison {
+@Entity
+@Table(name = "pricecomparison")
+public class PriceComparison implements Comparable {
+    @Id
+    @Column(name = "PRICECOMPARISONID")
+    @GenericGenerator(name="generator", strategy="increment")
+    @GeneratedValue(generator="generator")
     private Long id;
+
+    @Column(name = "URL")
     private String url;
+
+    @ManyToOne( targetEntity=Product.class )
+    @JoinColumn(name="PRODUCTID")
     private Product product;
+
+    @Column(name = "RESELLER")
     private String reseller;
+
+    @Column(name = "PRICE")
     private Double price;
 
     @Override
@@ -77,5 +95,9 @@ public class PriceComparison {
         this.url = url;
     }
 
-
+    @Override
+    public int compareTo(Object o) {
+        PriceComparison priceComparison = (PriceComparison) o;
+        return this.price.compareTo(priceComparison.price);
+    }
 }

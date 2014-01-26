@@ -26,7 +26,6 @@
         <p>URL: <c:out value="${priceComparison.url}"/> </p>
     </c:forEach>
 
-
   <br/>
 </c:forEach>
 

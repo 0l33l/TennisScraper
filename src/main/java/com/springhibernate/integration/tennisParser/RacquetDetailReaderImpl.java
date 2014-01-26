@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,7 +44,7 @@ public class RacquetDetailReaderImpl implements RacquetDetailReader {
         Product product;
         Document doc;
         try {
-            doc = Jsoup.connect(url).timeout(6000).get();
+            doc = Jsoup.connect(url).timeout(12000).get();
         } catch (IOException e) {
             System.out.println("Unable to process URL: " + url);
             e.printStackTrace();
@@ -83,18 +82,33 @@ public class RacquetDetailReaderImpl implements RacquetDetailReader {
                     tmpImg = new Image();
                     tmpImg.setProduct(product);
                     tmpImg.setUrl(element.attr("src").replaceAll("/tiny", ""));
+                    if (element.attr("src").contains("tiny")) {
+                        tmpImg.setUrl_thumb(element.attr("src"));
+                    }
                     product.getImages().add(tmpImg);
                 }
             }
 
             Element category = doc.getElementsByAttributeValue("itemprop", "category").first();
 
+//            Working for categories
+//            com.springhibernate.integration.model.Category tmpCategory;
+//            tmpCategory = categoriesRepository.findCategoryByName(category.attr("content"));
+//            if (tmpCategory == null) {
+//                tmpCategory = new com.springhibernate.integration.model.Category();
+//                tmpCategory.setName(category.attr("content"));
+//            }
+
             com.springhibernate.integration.model.Category tmpCategory;
-            tmpCategory = categoriesRepository.findCategoryByName(category.attr("content"));
+            tmpCategory = categoriesRepository.findCategoryByName(doc.getElementsByAttributeValue("itemprop", "brand").first().html());
             if (tmpCategory == null) {
                 tmpCategory = new com.springhibernate.integration.model.Category();
-                tmpCategory.setName(category.attr("content"));
+                tmpCategory.setName(doc.getElementsByAttributeValue("itemprop", "brand").first().html());
             }
+
+            product.setBrand(doc.getElementsByAttributeValue("itemprop", "brand").first().html());
+
+            product.setUrl(url);
 
             product.setCategory(tmpCategory);
 

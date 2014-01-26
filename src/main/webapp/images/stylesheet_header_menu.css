@@ -1,0 +1,92 @@
+body {  
+	behavior: url(includes/csshover.htc);
+	}
+
+div#dropMenu li a:hover, div#dropMenu li.submenu li.submenu:hover {}
+
+	
+#dropMenuWrapper {
+	width:100%;
+	margin:0;
+	}
+	
+div#dropMenu {
+	z-index:2;
+	position:relative;
+	}
+
+div#dropMenu ul {
+	margin: 0; 
+	padding: 0;
+	}
+	
+div#dropMenu li {
+	position: relative; 
+	list-style: none; 
+	margin: 0; 
+	float: left; 
+	line-height: 1em;
+	}
+	
+div#dropMenu ul.level1 {}
+	
+div#dropMenu li:hover {}
+div#dropMenu li.submenu {}
+div#dropMenu li.submenu:hover {}
+div#dropMenu li a {display: block;} 
+div#dropMenu>ul a {width: auto;}
+div#dropMenu ul ul {position: absolute; display: none; min-width:125px;
+	background:#fff;
+	border:1px solid #f3f1ed;
+	padding:12px 0 12px 0; left:0;}
+div#dropMenu ul ul li {}
+div#dropMenu li.submenu li.submenu {}
+div#dropMenu ul.level1 li.submenu:hover ul.level2, 
+div#dropMenu ul.level2 li.submenu:hover ul.level3,
+div#dropMenu ul.level3 li.submenu:hover ul.level4,
+div#dropMenu ul.level4 li.submenu:hover ul.level5 {display:block;z-index:2;}
+div#dropMenu ul.level2 {top:54px; left:-20px; z-index:2;}
+div#dropMenu ul.level3, div#dropMenu ul.level4, div#dropMenu ul.level5 {top: 0; left:120px;}
+div#dropMenu ul.level2 a {padding: 0; text-transform:none;}  /* this is text color on drop-down submenu */
+div#dropMenu ul.level2 a:hover {}
+
+div#dropMenu ul.level1{
+	padding: 0 0 0 20px;
+}
+div#dropMenu ul.level1>li{
+	margin-right:27px;
+}
+div#dropMenu ul.level1>li>a{
+	color:#b77f67;
+	font-size:12px;
+	line-height:24px;
+	text-decoration:none;
+	font-weight:bold;
+	padding:14px 0 16px 0;
+}
+div#dropMenu ul.level1>li>a:hover{
+	color:#4a4b4c;
+}
+div#dropMenu ul.level2{
+	min-width:125px;
+	background:#fff;
+	border:1px solid #f3f1ed;
+	padding:12px 0 12px 0;
+}
+div#dropMenu ul.level2 li{
+	min-width:125px;
+}
+div#dropMenu ul.level2 li a{
+	color:#b3aead;
+	font-size:12px;
+	line-height:22px;
+	text-decoration:none;
+	padding:0 0 0 19px;
+}
+div#dropMenu ul.level2 li a:hover{
+	color:#c13727;
+}
+div#dropMenu ul.level1 li.submenu > a:hover, 
+div#dropMenu ul.level1 li.submenu:hover > a{
+	color:#4a4b4c;
+}

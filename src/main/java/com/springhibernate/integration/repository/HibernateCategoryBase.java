@@ -41,7 +41,7 @@ public class HibernateCategoryBase implements CategoryBase {
     @SuppressWarnings("unchecked")
     @Transactional
     public List<Category> getCategories() {
-        return sessionFactory.getCurrentSession().createQuery("from Category u").list();
+        return sessionFactory.getCurrentSession().createQuery("from Category u order by u.name").list();
     }
 
     @Override

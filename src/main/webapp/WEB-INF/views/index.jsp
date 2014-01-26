@@ -24,6 +24,19 @@
 <a href="tennis/viewAll">View All</a>
 <br>
 <a href="tennis/viewAllRacquets">Parse all racquets!</a>
+<br>
+<br>
+<br>
+<a href="tennis/template">View Template!</a>
+<br>
+<a href="auth/login">Login</a>
+<br>
+<a href="auth/logout">Logout</a>
+<br>
+<a href="main/admin">Admin</a>
+<br>
+<a href="main/common">Common</a>
+
 
 </body>
 

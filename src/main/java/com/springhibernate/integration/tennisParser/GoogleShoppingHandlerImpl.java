@@ -20,7 +20,7 @@ public class GoogleShoppingHandlerImpl implements GoogleShoppingHandler {
         Document doc = null;
         try {
             doc = Jsoup.connect("https://www.googleapis.com/shopping/search/v1/public/products?country=US&q=" + product.getName().replace(' ', '+') +
-                    "&key=AIzaSyCWBo90sx-A4Y4aZZhWfJSf1m2df88rsUI&alt=atom").timeout(6000).ignoreContentType(true).get();
+                    "&key=AIzaSyCWBo90sx-A4Y4aZZhWfJSf1m2df88rsUI&alt=atom").timeout(12000).ignoreContentType(true).get();
             Elements products = doc.getElementsByTag("s:product");
             product.getPriceComparisons().clear();
             for (Element link : products) {

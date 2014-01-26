@@ -1,12 +1,29 @@
 package com.springhibernate.integration.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
 /**
  * @author Nabeel Ali Memon
  */
+@Entity
+@Table(name = "image")
 public class Image {
+    @Id
+    @Column(name = "IMAGEID")
+    @GenericGenerator(name="generator", strategy="increment")
+    @GeneratedValue(generator="generator")
     private Long id;
+
+    @Column(name = "URL")
     private String url;
+
+    @Column(name = "url_thumb")
     private String url_thumb;
+
+    @ManyToOne( targetEntity=Product.class )
+    @JoinColumn(name="PRODUCTID")
     private Product product;
 
     public Product getProduct() {

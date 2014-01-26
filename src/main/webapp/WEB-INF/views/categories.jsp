@@ -13,7 +13,7 @@
 <br/> <br/>
 <c:forEach var="category" items="${categories}">
   <h3>Category Details:</h3>
-  <p>Name: <a href="../tennis/viewProduct/${category.id}"><c:out value="${category.name}"/></a></p>
+  <p>Name: <a href="../tennis/viewCategory/${category.id}"><c:out value="${category.name}"/></a></p>
   <p>Parent: <c:out value="${category.parent.name}"/> </p>
   <br/>
 </c:forEach>
