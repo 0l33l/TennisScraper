@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="10" verbose="1" name="SpringHibernateIntegration-suite" annotations="JDK" parallel="methods">
+
+  <!--base defaults-->
+  <parameter name="firstName" value="Nabeel"/>
+  <parameter name="lastName" value="Memon"/>
+  <parameter name="emailAddress" value="nabeelalimemon@gmail.com"/>
+
+  <!--view names that return from UserController methods-->
+  <parameter name="getUsers" value="users"/>
+  <parameter name="getUser" value="userDetails"/>
+
+  <test name="integration-tests">
+    <packages>
+      <package name="com.springhibernate.integration.model"/>
+      <package name="com.springhibernate.integration.repository"/>
+      <package name="com.springhibernate.integration.web.controllers"/>
+    </packages>
+  </test>
+
+</suite>

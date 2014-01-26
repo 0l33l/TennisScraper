@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.springhibernate.integration.model.Product" table="PRODUCT">
+        <id name="id" column="idproduct">
+            <generator class="increment"/>
+        </id>
+
+        <property name="name" column="NAME"/>
+
+        <many-to-one name="category" class="com.springhibernate.integration.model.Category" lazy="false" cascade="all"
+                     column="idcategory"/>
+
+        <property name="price" column="PRICE"/>
+
+        <property name="specs" column="SPECS"/>
+
+        <set name="images" table="image" lazy="false" cascade="all-delete-orphan" inverse="true">
+            <key column="idproduct" foreign-key="idproduct"/>
+            <one-to-many class="com.springhibernate.integration.model.Image"/>
+        </set>
+
+        <set name="priceComparisons" table="pricecomparison" lazy="false" cascade="all-delete-orphan" inverse="true">
+            <key column="idproduct" foreign-key="idproduct"/>
+            <one-to-many class="com.springhibernate.integration.model.PriceComparison"/>
+        </set>
+
+
+    </class>
+</hibernate-mapping>

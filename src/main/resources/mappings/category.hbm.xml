@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.springhibernate.integration.model.Category" table="CATEGORY">
+        <id name="id" column="idcategory">
+            <generator class="increment"/>
+        </id>
+
+        <many-to-one name="parent" column="parent_categoryid" class="com.springhibernate.integration.model.Category" lazy="false" cascade="all"/>
+
+        <property name="name" column="NAME"/>
+    </class>
+</hibernate-mapping>

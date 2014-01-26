@@ -1,0 +1,8 @@
+target/
+out/
+.idea/
+application.log*
+*.iml
+*.ipr
+*.iws
+
